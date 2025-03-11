@@ -3,7 +3,7 @@
 using namespace std;
 
 int main() {
-    init_ascii();
+    init_credits();
 
     return 0;
 }
