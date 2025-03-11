@@ -22,6 +22,7 @@ pair<bool, string> githubCall(const string& current_version) {
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
+    curl_easy_setopt(curl, CURLOPT_USERAGENT, "Mozilla/5.0");
 
     CURLcode res = curl_easy_perform(curl);
     long http_code = 0;
@@ -43,7 +44,7 @@ pair<bool, string> githubCall(const string& current_version) {
     try {
         json tags = json::parse(response);
         if (!tags.empty() && tags[0].contains("name")) {
-            string latest_version = tags[0]["name"];
+            latest_version = tags[0]["name"];
         } else {
             return make_pair(false, string_to_error("Error: not found name in json of github."));
         }
